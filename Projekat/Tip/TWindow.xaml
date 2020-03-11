@@ -1,0 +1,93 @@
+﻿<Window x:Class="Projekat.Tip.TWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekat.Tip"
+        xmlns:validacija="clr-namespace:Projekat.Validacija"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Tip" Height="350" Width="600" Name="TWindowN" Icon="pack://application:,,,/Resources/ititle.png" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
+
+    <Grid Margin="10, 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="150"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Oznaka: " FontSize="14"/>
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Ime: " FontSize="14"/>
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Opis: " FontSize="14"/>
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Ikonica: " FontSize="14"/>
+
+        <TextBox x:Name="OznakaTB" MaxHeight="30" Margin="10,5,150, 5" TextChanged="OznakaTB_TextChanged" Grid.Column="1" Grid.Row="0" FontSize="14">
+            <TextBox.Text>
+                <Binding Path="novi.Oznaka" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validacija:NameValidation ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBox x:Name="ImeTB" MaxHeight="30" Margin="10,5,150, 5" Grid.Column="1" Grid.Row="1" FontSize="14">
+            <TextBox.Text>
+                <Binding Path="novi.Ime" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validacija:NameValidation ValidationStep="RawProposedValue"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+        <TextBox x:Name="OpisTB" MaxHeight="150" Margin="10,5,150, 5" Grid.Column="1" Grid.Row="2" FontSize="14"/>
+
+        <Image Stretch="Fill" x:Name="Slika" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Width="200"/>
+
+        <Button Grid.Column="1" Grid.Row="3" Margin="50,0" Width="100" Height="25" HorizontalAlignment="Left" FontSize="14" Click="IkonicaB_Click" Content="Izaberi"/>
+
+        <Button x:Name="Button1" Content="Sačuvaj" FontSize="14" Grid.Column="1" Grid.Row="4" Width="100" Height="25" HorizontalAlignment="Center" Click="SaveB_Click"/>
+    </Grid>
+</Window>

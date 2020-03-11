@@ -1,0 +1,113 @@
+﻿<Window x:Class="Projekat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projekat"
+        xmlns:resurs="clr-namespace:Projekat.Resurs"
+        xmlns:tip="clr-namespace:Projekat.Tip"
+        xmlns:etiketa="clr-namespace:Projekat.Etiketa"
+        mc:Ignorable="d"
+        Title="HCI" x:Name ="Main" Height="450" Width="1000" Icon="./Resources/ititle.png" Topmost="False" Closing="Main_Closing">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
+
+    <DockPanel>
+        <Menu DockPanel.Dock ="Top" FontSize="14">
+
+            <MenuItem Header="Resursi" Click="rClick1">
+            </MenuItem>
+
+            <MenuItem Header="Tipovi" Click="Tip_Click">
+            </MenuItem>
+
+            <MenuItem Header="Etikete" Click="Etiketa_Click">
+            </MenuItem>
+
+            <MenuItem Header="Help" Click="MenuItem_Click">
+            </MenuItem>
+
+        </Menu>
+
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Name="PregledR" IsReadOnly="True" Grid.Row="2" Grid.Column="0" AutoGenerateColumns="False" FontSize="14">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}" />
+
+                    <DataGridTextColumn Header="Ime" Binding="{Binding Ime}" />
+
+                    <DataGridTextColumn Header="Opis" Binding="{Binding Opis}" />
+
+                    <DataGridTextColumn Header="Oznaka tipa" Binding="{Binding Tip.Oznaka}" />
+
+                    <DataGridTextColumn Header="Frekvencija pojavljivanja" Binding="{Binding Frekvencija}" />
+
+                    <DataGridTemplateColumn Header="Ikonica">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Ikonica}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridCheckBoxColumn Header="Obnovljivost" Binding="{Binding Obnovljiv}" />
+
+                    <DataGridCheckBoxColumn Header="Strateška važnost" Binding="{Binding Strateska}" />
+
+                    <DataGridCheckBoxColumn Header="Obnovljivost" Binding="{Binding Eksploatisanje}" />
+
+                    <DataGridTextColumn Header="Mera" Binding="{Binding Mera}" />
+
+                    <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
+
+                    <DataGridTextColumn Header="Datum pronalaska" Binding="{Binding Datum}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <ListView Name="listView" MouseDoubleClick="ListView_OnMouseDoubleClick" FontSize="14" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding Resursi}" SelectionChanged="ListView_SelectionChanged">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewKeyDown" Handler="EventSetter_OnHandler" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Ikonica" Width="60">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Cursor="Hand" MouseMove="Icon_OnMouseMove" PreviewMouseLeftButtonDown="Icon_OnPreviewMouseLeftButtonDown" Name="IconImg"  Width="30" Height="30" Source="{Binding Ikonica}"></Image>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Oznaka" Width="80" DisplayMemberBinding="{Binding Oznaka}"/>
+                        <GridViewColumn Header="Ime" Width="80" DisplayMemberBinding="{Binding Ime}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Grid.Column="1" Grid.RowSpan="3">
+                <Canvas x:Name="mapImageView" AllowDrop="True" Drop="MapImageView_OnDrop" DragEnter="MapImageView_OnDragEnter" MouseLeftButtonDown="MapImageView_MouseLeftButtonDown">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="Resources/mapa1.jpg" />
+                    </Canvas.Background>
+                </Canvas>
+            </Grid>
+
+            
+
+        </Grid>
+    </DockPanel>
+</Window>
